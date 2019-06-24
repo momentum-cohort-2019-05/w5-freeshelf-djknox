@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from library.models import Book, Author
+from library.models import Book, Author, Category
 from django.views import generic
 
 
@@ -28,3 +28,11 @@ class BookListView(generic.ListView):
 
 class BookDetailView(generic.DetailView):
     model = Book
+
+
+class CategoryListView(generic.ListView):
+    model = Category
+
+
+class CategoryDetailView(generic.DetailView):
+    model = Category
