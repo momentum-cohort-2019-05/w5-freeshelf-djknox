@@ -24,6 +24,9 @@ class Book(models.Model):
 
     # a book can only have one author, but authors can have multiple books
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        ordering = ['-created_date']
     
     def __str__(self):
         """String for representing the Book object."""
