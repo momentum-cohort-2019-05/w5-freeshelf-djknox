@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}<title>freeshelf - library</title>{% endblock %}
+
+{% block content %}
+    <h1>freeshelf - library home</h1>
+    <p>The library has:</p>
+    <ul>
+        <li>Books: {{ num_books }}</li>
+        <li>Authors: {{ num_authors }}</li>
+    </ul>
+{% endblock %}
