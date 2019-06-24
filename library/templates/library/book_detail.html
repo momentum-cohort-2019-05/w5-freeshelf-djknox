@@ -2,8 +2,9 @@
 
 {% block content %}
   <h1><strong>Title:</strong> {{ book.title }}</h1>
-  
+
   <p><strong>Author:</strong> {{ book.author }}</a></p>
   <p><strong>Description:</strong> {{ book.description }}</p>
-  <p><strong>URL:</strong> {{ book.url }}</p>
+  <p><strong>URL:</strong> <a href="{{ book.url }}" target="_blank">{{ book.url }}</a></p>
 {% endblock %}
+
