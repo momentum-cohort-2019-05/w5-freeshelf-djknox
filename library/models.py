@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 class Author(models.Model):
     """Model representing an author."""
@@ -17,8 +18,9 @@ class Author(models.Model):
 class Book(models.Model):
     """Model representing a book."""
     title = models.CharField(max_length=200)
-    url = models.URLField(max_length=200, help_text='Enter the URL of the book')
+    url = models.URLField(max_length=200, unique=True, help_text='Enter the URL of the book')
     description = models.TextField(max_length=1000, help_text='Enter a brief description of the book')
+    created_date = models.DateTimeField(default=timezone.now)
 
     # a book can only have one author, but authors can have multiple books
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
