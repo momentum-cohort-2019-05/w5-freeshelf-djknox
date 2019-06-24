@@ -20,7 +20,8 @@ class Book(models.Model):
     title = models.CharField(max_length=200)
     url = models.URLField(max_length=200, unique=True, help_text='Enter the URL of the book')
     description = models.TextField(max_length=1000, help_text='Enter a brief description of the book')
-    created_date = models.DateTimeField(default=timezone.now)
+    image = models.ImageField(null=True, upload_to='books')
+    created_date = models.DateTimeField(auto_now_add=True)
 
     # a book can only have one author, but authors can have multiple books
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)

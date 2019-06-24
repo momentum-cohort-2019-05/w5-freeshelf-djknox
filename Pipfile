@@ -8,6 +8,7 @@ prospector = "*"
 
 [packages]
 django = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.7"
