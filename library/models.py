@@ -58,6 +58,10 @@ class Book(models.Model):
         """Returns the url to access a detail record for this book."""
         return reverse('book-detail', args=[str(self.id)])
 
+    def get_num_favorites(self):
+        """Returns the number of times the book has been favorited by a user."""
+        return self.favorites.count()
+
 
 class Favorite(models.Model):
     """Model representing a user's book favorite."""

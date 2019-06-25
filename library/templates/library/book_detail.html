@@ -6,5 +6,6 @@
   <p><strong>Author:</strong> {{ book.author }}</a></p>
   <p><strong>Description:</strong> {{ book.description }}</p>
   <p><strong>URL:</strong> <a href="{{ book.url }}" target="_blank">{{ book.url }}</a></p>
+  <p>Favorited {{ book.get_num_favorites }} time{{ book.get_num_favorites|pluralize }}</p>
 {% endblock %}
 
