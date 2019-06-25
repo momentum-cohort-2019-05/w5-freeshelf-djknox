@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>My Favorites</h1>
+
+    {% if favorite_list %}
+    <ul>
+
+      {% for favorite in favorite_list %} 
+      <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
+            <a href="{{ favorite.book.get_absolute_url }}">{{ favorite.book.title }}</a> by {{ favorite.book.author }}   
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>You haven't favorited any books.</p>
+    {% endif %}       
+{% endblock %}

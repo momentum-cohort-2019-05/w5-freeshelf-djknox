@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from library.models import Book, Author, Category
+from library.models import Book, Author, Category, Favorite
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def index(request):
@@ -36,3 +37,12 @@ class CategoryListView(generic.ListView):
 
 class CategoryDetailView(generic.DetailView):
     model = Category
+
+
+class UserFavoritesListView(LoginRequiredMixin,generic.ListView):
+    """Generic class-based view listing books on loan to current user."""
+    model = Favorite
+    template_name ='library/user_favorites_list.html'
+    
+    def get_queryset(self):
+        return Favorite.objects.filter(user=self.request.user)

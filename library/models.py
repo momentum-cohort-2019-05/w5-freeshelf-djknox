@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 class Author(models.Model):
     """Model representing an author."""
@@ -44,6 +45,7 @@ class Book(models.Model):
 
     # a book can have many categories, and a category can have many books
     categories = models.ManyToManyField(Category, help_text='Select categories for this book')
+    favorites = models.ManyToManyField(User, through='Favorite')
 
     class Meta:
         ordering = ['-created_date']
@@ -55,3 +57,18 @@ class Book(models.Model):
     def get_absolute_url(self):
         """Returns the url to access a detail record for this book."""
         return reverse('book-detail', args=[str(self.id)])
+
+
+class Favorite(models.Model):
+    """Model representing a user's book favorite."""
+    # a user can favorite many books, and a book can be favorited by many users
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_date']
+
+    def __str__(self):
+        """String for representing the Favorite object."""
+        return f"{self.user.username} - {self.book.title}"
