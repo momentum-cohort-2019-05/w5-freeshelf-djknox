@@ -26,6 +26,14 @@ def index(request):
 class BookListView(generic.ListView):
     model = Book
 
+    def get_queryset(self):
+        # GET parameter can order by created_date or title
+        order_by = self.request.GET.get('order_by')
+        if order_by in ['created_date', '-created_date', 'title', '-title']:
+            return Book.objects.order_by(order_by)
+        else:
+            return Book.objects.all()
+
 
 class BookDetailView(generic.DetailView):
     model = Book

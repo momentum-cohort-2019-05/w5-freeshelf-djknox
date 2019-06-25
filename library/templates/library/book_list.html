@@ -2,6 +2,12 @@
 
 {% block content %}
   <h1>Books</h1>
+  <ul>
+    <li><a href="{% url 'books' %}?order_by=title">order books A-Z by title</a></li>
+    <li><a href="{% url 'books' %}?order_by=-title">order books Z-A by title</a></li>
+    <li><a href="{% url 'books' %}?order_by=created_date">order books by date added (oldest to most recent)</a></li>
+    <li><a href="{% url 'books' %}?order_by=-created_date">order books by date added (most recent to oldest)</a></li>
+  </ul>
   {% if book_list %}
   <ul>
     {% for book in book_list %}
