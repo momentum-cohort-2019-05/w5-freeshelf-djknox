@@ -66,7 +66,10 @@ def favorite_book(request, pk):
     # if the request is a GET (the user requests the /book/<book>/favorite url)
     # book.favorites.add(request.user)
     if request.method == 'GET':
-        book.favorites.add(request.user)
+        if request.user in book.favorites.all():
+            book.favorites.remove(request.user)
+        else:
+            book.favorites.add(request.user)
 
     # redirect to a new URL:
     return HttpResponseRedirect(reverse('books'))

@@ -16,6 +16,8 @@
 
         {% if request.user.is_authenticated and request.user not in book.favorites.all %}
         <a href="{% url 'favorite-book' book.pk %}">favorite</a>
+        {% elif request.user.is_authenticated and request.user in book.favorites.all %}
+        <a href="{% url 'favorite-book' book.pk %}">unfavorite</a>
         {% endif %}
       </li>
     {% endfor %}
