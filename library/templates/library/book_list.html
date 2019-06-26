@@ -15,9 +15,9 @@
         <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> by {{book.author}}
 
         {% if request.user.is_authenticated and request.user not in book.favorites.all %}
-        <a href="{% url 'favorite-book' book.pk %}">favorite</a>
+        <a href="{% url 'favorite-book' book.pk %}?next={{ request.path }}">favorite</a>
         {% elif request.user.is_authenticated and request.user in book.favorites.all %}
-        <a href="{% url 'favorite-book' book.pk %}">unfavorite</a>
+        <a href="{% url 'favorite-book' book.pk %}?next={{ request.path }}">unfavorite</a>
         {% endif %}
       </li>
     {% endfor %}

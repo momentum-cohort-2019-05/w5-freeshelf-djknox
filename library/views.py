@@ -72,6 +72,6 @@ def favorite_book(request, pk):
             book.favorites.add(request.user)
 
     # redirect to a new URL:
-    return HttpResponseRedirect(reverse('books'))
+    return HttpResponseRedirect(request.GET.get("next"))
 
     

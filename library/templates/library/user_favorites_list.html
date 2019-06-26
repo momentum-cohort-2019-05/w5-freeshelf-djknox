@@ -10,6 +10,7 @@
       <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
             <a href="{{ favorite.book.get_absolute_url }}">{{ favorite.book.title }}</a> by {{ favorite.book.author }}   
       </li>
+      <a href="{% url 'favorite-book' favorite.book.pk %}?next={{ request.path }}">unfavorite</a>
       {% endfor %}
     </ul>
 
