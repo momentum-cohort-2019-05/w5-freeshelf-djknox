@@ -51,7 +51,7 @@ class CategoryDetailView(generic.DetailView):
 
 
 class UserFavoritesListView(LoginRequiredMixin,generic.ListView):
-    """Generic class-based view listing books on loan to current user."""
+    """Generic class-based view listing books that have been favorited by current user."""
     model = Favorite
     template_name ='library/user_favorites_list.html'
     
