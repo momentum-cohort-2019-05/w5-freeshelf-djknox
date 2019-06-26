@@ -2,6 +2,9 @@ from django.shortcuts import render
 from library.models import Book, Author, Category, Favorite
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 
 def index(request):
@@ -54,3 +57,18 @@ class UserFavoritesListView(LoginRequiredMixin,generic.ListView):
     
     def get_queryset(self):
         return Favorite.objects.filter(user=self.request.user)
+
+
+def favorite_book(request, pk):
+    """View function for favoriting a Book by a User."""
+    book = get_object_or_404(Book, pk=pk)
+
+    # if the request is a GET (the user requests the /book/<book>/favorite url)
+    # book.favorites.add(request.user)
+    if request.method == 'GET':
+        book.favorites.add(request.user)
+
+    # redirect to a new URL:
+    return HttpResponseRedirect(reverse('books'))
+
+    

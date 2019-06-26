@@ -8,4 +8,5 @@ urlpatterns = [
     path('categories/', views.CategoryListView.as_view(), name='categories'),
     path('category/<int:pk>', views.CategoryDetailView.as_view(), name='category-detail'),
     path('favorites/', views.UserFavoritesListView.as_view(), name='favorites'),
+    path('book/<int:pk>/favorite', views.favorite_book, name='favorite-book'),
 ]

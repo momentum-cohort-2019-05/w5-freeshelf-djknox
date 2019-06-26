@@ -13,6 +13,10 @@
     {% for book in book_list %}
       <li>
         <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> by {{book.author}}
+
+        {% if request.user.is_authenticated and request.user not in book.favorites.all %}
+        <a href="{% url 'favorite-book' book.pk %}">favorite</a>
+        {% endif %}
       </li>
     {% endfor %}
   </ul>
