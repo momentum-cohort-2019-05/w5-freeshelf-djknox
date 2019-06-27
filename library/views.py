@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from library.models import Book, Author, Category, Favorite
+from library.models import Book, Author, Category, Favorite, Comment
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from library.forms import BookCommentForm
 
 
 def index(request):
@@ -73,5 +74,33 @@ def favorite_book(request, pk):
 
     # redirect to a new URL:
     return HttpResponseRedirect(request.GET.get("next"))
+
+
+def comment_on_book(request, pk):
+    """View function for commenting on a Book by a User."""
+    book = get_object_or_404(Book, pk=pk)
+
+    # if the request is a POST (the user submits the form to /book/<book>/comment)
+    if request.method == 'POST':
+        form = BookCommentForm(request.POST)
+
+        if form.is_valid():
+            # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
+            comment = Comment(book=book, user=request.user, text=form.cleaned_data['text'])
+            comment.save()
+
+        # redirect to a new URL:
+        return HttpResponseRedirect(reverse_lazy('book-detail', kwargs = {'pk': pk}))
+
+    # If the request is a GET then show the form
+    else:
+        form = BookCommentForm()
+
+        context = {
+            'form': form,
+            'book': book,
+        }
+
+        return render(request, 'library/book_comment.html', context)
 
     

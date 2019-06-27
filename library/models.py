@@ -64,8 +64,7 @@ class Book(models.Model):
 
 
 class Favorite(models.Model):
-    """Model representing a user's book favorite."""
-    # a user can favorite many books, and a book can be favorited by many users
+    """A User can favorite many Books and a Book can be favorited by many Users"""
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
@@ -76,3 +75,18 @@ class Favorite(models.Model):
     def __str__(self):
         """String for representing the Favorite object."""
         return f"{self.user.username} - {self.book.title}"
+
+
+class Comment(models.Model):
+    """A Comment is made on one Book and is made by one User"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    text = models.TextField(help_text='Write your comment here.')
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['created_date',]
+
+    def __str__(self):
+        """String for representing the Comment object."""
+        return f"{self.user.username} - {self.text}"

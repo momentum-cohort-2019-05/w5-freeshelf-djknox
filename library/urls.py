@@ -9,4 +9,5 @@ urlpatterns = [
     path('category/<int:pk>', views.CategoryDetailView.as_view(), name='category-detail'),
     path('favorites/', views.UserFavoritesListView.as_view(), name='favorites'),
     path('book/<int:pk>/favorite', views.favorite_book, name='favorite-book'),
+    path('book/<int:pk>/comment', views.comment_on_book, name='comment-book'),
 ]
