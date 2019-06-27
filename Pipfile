@@ -9,6 +9,8 @@ prospector = "*"
 [packages]
 django = "*"
 pillow = "*"
+django-heroku = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
