@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from library.models import Book, Author, Category, Favorite, Comment, User
+from library.models import Book, Author, Category, Favorite, Comment, User, SuggestedBook
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from library.forms import BookCommentForm
+from library.forms import BookCommentForm, BookSuggestForm
 
 
 def index(request):
@@ -85,7 +85,6 @@ def comment_on_book(request, pk):
         form = BookCommentForm(request.POST)
 
         if form.is_valid():
-            # process the data in form.cleaned_data as required (here we just write it to the model due_back field)
             comment = Comment(book=book, user=request.user, text=form.cleaned_data['text'])
             comment.save()
 
@@ -107,3 +106,28 @@ def comment_on_book(request, pk):
 class UserDetailView(generic.DetailView):
     model = User
     template_name ='library/user_detail.html'
+
+
+def suggest_book(request):
+    """View function for a User to suggest a Book."""
+
+    # if the request is a POST (the user submits the form to /suggest/)
+    if request.method == 'POST':
+        form = BookSuggestForm(request.POST)
+
+        if form.is_valid():
+            suggested_book = SuggestedBook(
+                title=form.cleaned_data['title'],
+                author=form.cleaned_data['author'],
+                url=form.cleaned_data['url'],
+                description=form.cleaned_data['description'],
+            )
+            suggested_book.user = request.user
+            suggested_book.save()
+
+        # redirect to a new URL:
+        return HttpResponseRedirect(reverse_lazy('suggest-book'))
+    # If the request is a GET then show the form
+    else:
+        form = BookSuggestForm()
+        return render(request, 'library/book_suggest.html', {'form': form})

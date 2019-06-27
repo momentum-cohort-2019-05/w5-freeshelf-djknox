@@ -34,7 +34,7 @@ class Category(models.Model):
 
 class Book(models.Model):
     """Model representing a book."""
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, help_text='Enter the title of the book')
     url = models.URLField(max_length=200, unique=True, help_text='Enter the URL of the book')
     description = models.TextField(max_length=1000, help_text='Enter a brief description of the book')
     image = models.ImageField(null=True, blank=True, upload_to='books')
@@ -90,3 +90,15 @@ class Comment(models.Model):
     def __str__(self):
         """String for representing the Comment object."""
         return f"{self.user.username} - {self.text}"
+
+
+class SuggestedBook(models.Model):
+    """Model representing a suggested book."""
+    title = models.CharField(max_length=200, help_text='Enter the title of the book')
+    author = models.CharField(max_length=200, help_text='Enter the author of the book')
+    url = models.URLField(max_length=200, unique=True, help_text='Enter the URL of the book')
+    description = models.TextField(max_length=1000, help_text='Enter a brief description of the book')
+    created_date = models.DateTimeField(auto_now_add=True)
+
+    # a SuggestedBook is suggested by a user
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
