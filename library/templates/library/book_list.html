@@ -19,6 +19,8 @@
         {% elif request.user.is_authenticated and request.user in book.favorites.all %}
         <a href="{% url 'favorite-book' book.pk %}?next={{ request.path }}">unfavorite</a>
         {% endif %}
+
+        ({{ book.comment_set.count }} comment{{ book.comment_set.count|pluralize }})
       </li>
     {% endfor %}
   </ul>

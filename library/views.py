@@ -4,7 +4,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from library.forms import BookCommentForm
 
 
@@ -102,5 +102,3 @@ def comment_on_book(request, pk):
         }
 
         return render(request, 'library/book_comment.html', context)
-
-    
