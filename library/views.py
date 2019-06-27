@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from library.models import Book, Author, Category, Favorite, Comment
+from library.models import Book, Author, Category, Favorite, Comment, User
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
@@ -102,3 +102,8 @@ def comment_on_book(request, pk):
         }
 
         return render(request, 'library/book_comment.html', context)
+
+
+class UserDetailView(generic.DetailView):
+    model = User
+    template_name ='library/user_detail.html'

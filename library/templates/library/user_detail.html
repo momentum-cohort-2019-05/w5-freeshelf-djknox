@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ user.username }}</h1>
+  <div>
+    <h2>Favorited Books</h2>
+    {% if user.favorite_set.all %}
+    <ul>
+      {% for favorite in user.favorite_set.all %} 
+      <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
+            <a href="{{ favorite.book.get_absolute_url }}">{{ favorite.book.title }}</a> by {{ favorite.book.author }}   
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>No favorited books.</p>
+    {% endif %}  
+  </div>
+
+  <div>
+      <h2>Comments</h2>
+      {% for comment in user.comment_set.all %}
+        <hr>
+        <h4>Book: {{ comment.book.title }}</h4>
+        <p>
+            {{ comment.user.username }} ({{ comment.created_date }}) - {{ comment.text }}
+        </p>
+      {% endfor %}
+    </div>
+{% endblock %}
