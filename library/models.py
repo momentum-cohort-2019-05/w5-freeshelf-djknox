@@ -102,3 +102,7 @@ class SuggestedBook(models.Model):
 
     # a SuggestedBook is suggested by a user
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        """String for representing the SuggestedBook object."""
+        return f"{self.user.username} suggested: \"{self.title}\" by {self.author}"

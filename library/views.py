@@ -131,3 +131,48 @@ def suggest_book(request):
     else:
         form = BookSuggestForm()
         return render(request, 'library/book_suggest.html', {'form': form})
+
+
+class SuggestedBookListView(LoginRequiredMixin,generic.ListView):
+    """Generic class-based view listing of all books that have been suggested by all users."""
+    model = SuggestedBook
+    template_name ='library/suggested_books.html'
+
+
+def accept_suggested_book(request, pk):
+    """View function for accepting a SuggestedBook and creating a Book."""
+    suggested_book = get_object_or_404(SuggestedBook, pk=pk)
+
+    # if the request is a GET (the user requests the /suggestions/<book>/accept url)
+    # create a Book from the SuggestedBook object and remove SuggestedBook
+    if request.method == 'GET':
+        # check to see if author already exists
+        author = Author.objects.filter(name=suggested_book.author).first()
+        if not author:
+            author = Author(name = suggested_book.author)
+            author.save()
+
+        Book(
+            title = suggested_book.title,
+            author = author,
+            url = suggested_book.url,
+            description = suggested_book.description
+        ).save()
+
+        suggested_book.delete()
+
+    # redirect to a new URL:
+    return HttpResponseRedirect(request.GET.get("next"))
+
+
+def decline_suggested_book(request, pk):
+    """View function for declining a SuggestedBook."""
+    suggested_book = get_object_or_404(SuggestedBook, pk=pk)
+
+    # if the request is a GET (the user requests the /suggestions/<book>/decline url)
+    # create a Book from the SuggestedBook object and remove SuggestedBook
+    if request.method == 'GET':
+        suggested_book.delete()
+
+    # redirect to a new URL:
+    return HttpResponseRedirect(request.GET.get("next"))

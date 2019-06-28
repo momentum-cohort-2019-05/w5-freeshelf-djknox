@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Suggested Books</h1>
+  {% if suggestedbook_list %}
+  <ul>
+    {% for suggestedbook in suggestedbook_list %}
+    <h3><strong>Title:</strong> {{ suggestedbook.title }}</h3>
+
+    <p><strong>Author:</strong> {{ suggestedbook.author }}</a></p>
+    <p><strong>Description:</strong> {{ suggestedbook.description }}</p>
+    <p><strong>URL:</strong> <a href="{{ suggestedbook.url }}" target="_blank">{{ suggestedbook.url }}</a></p>
+    <a href="{% url 'accept-suggested-book' suggestedbook.pk %}?next={{ request.path }}">Accept</a>
+    <a href="{% url 'decline-suggested-book' suggestedbook.pk %}?next={{ request.path }}">Decline</a>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>No books have been suggested.</p>
+  {% endif %}       
+{% endblock %}

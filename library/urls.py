@@ -12,4 +12,7 @@ urlpatterns = [
     path('favorites/', views.UserFavoritesListView.as_view(), name='favorites'),
     path('user/<int:pk>/', views.UserDetailView.as_view(), name='user-profile'),
     path('suggest/', views.suggest_book, name='suggest-book'),
+    path('suggestions/', views.SuggestedBookListView.as_view(), name='suggestions'),
+    path('suggestions/<int:pk>/accept/', views.accept_suggested_book, name='accept-suggested-book'),
+    path('suggestions/<int:pk>/decline/', views.decline_suggested_book, name='decline-suggested-book'),
 ]
