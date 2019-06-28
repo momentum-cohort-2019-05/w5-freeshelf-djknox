@@ -2,9 +2,9 @@
 
 {% block content %}
   <h1>Suggested Books</h1>
-  {% if suggestedbook_list %}
+  {% if suggested_books %}
   <ul>
-    {% for suggestedbook in suggestedbook_list %}
+    {% for suggestedbook in suggested_books %}
     <h3><strong>Title:</strong> {{ suggestedbook.title }}</h3>
 
     <p><strong>Author:</strong> {{ suggestedbook.author }}</a></p>

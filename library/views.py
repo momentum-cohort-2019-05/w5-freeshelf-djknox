@@ -2,6 +2,7 @@ from django.shortcuts import render
 from library.models import Book, Author, Category, Favorite, Comment, User, SuggestedBook
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -133,12 +134,14 @@ def suggest_book(request):
         return render(request, 'library/book_suggest.html', {'form': form})
 
 
-class SuggestedBookListView(LoginRequiredMixin,generic.ListView):
-    """Generic class-based view listing of all books that have been suggested by all users."""
-    model = SuggestedBook
-    template_name ='library/suggested_books.html'
+@staff_member_required
+def list_suggested_books(request):
+    """View function listing all books that have been suggested by all users."""
+    suggested_books = SuggestedBook.objects.all()
+    return render(request, 'library/suggested_books.html', {'suggested_books': suggested_books})
 
 
+@staff_member_required
 def accept_suggested_book(request, pk):
     """View function for accepting a SuggestedBook and creating a Book."""
     suggested_book = get_object_or_404(SuggestedBook, pk=pk)
@@ -165,6 +168,7 @@ def accept_suggested_book(request, pk):
     return HttpResponseRedirect(request.GET.get("next"))
 
 
+@staff_member_required
 def decline_suggested_book(request, pk):
     """View function for declining a SuggestedBook."""
     suggested_book = get_object_or_404(SuggestedBook, pk=pk)
