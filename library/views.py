@@ -3,6 +3,7 @@ from library.models import Book, Author, Category, Favorite, Comment, User, Sugg
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -52,15 +53,20 @@ class CategoryDetailView(generic.DetailView):
     model = Category
 
 
-class UserFavoritesListView(LoginRequiredMixin,generic.ListView):
-    """Generic class-based view listing books that have been favorited by current user."""
-    model = Favorite
-    template_name ='library/user_favorites_list.html'
-    
-    def get_queryset(self):
-        return Favorite.objects.filter(user=self.request.user)
+class UserDetailView(generic.DetailView):
+    model = User
+    template_name ='library/user_detail.html'
 
 
+@login_required
+def list_user_favorites(request):
+    """View function for listing books that have been favorited by the current user."""
+    user_favorites = Favorite.objects.filter(user=request.user)
+
+    return render(request, 'library/user_favorites_list.html', {'user_favorites': user_favorites})
+
+
+@login_required
 def favorite_book(request, pk):
     """View function for favoriting a Book by a User."""
     book = get_object_or_404(Book, pk=pk)
@@ -77,6 +83,7 @@ def favorite_book(request, pk):
     return HttpResponseRedirect(request.GET.get("next"))
 
 
+@login_required
 def comment_on_book(request, pk):
     """View function for commenting on a Book by a User."""
     book = get_object_or_404(Book, pk=pk)
@@ -104,11 +111,7 @@ def comment_on_book(request, pk):
         return render(request, 'library/book_comment.html', context)
 
 
-class UserDetailView(generic.DetailView):
-    model = User
-    template_name ='library/user_detail.html'
-
-
+@login_required
 def suggest_book(request):
     """View function for a User to suggest a Book."""
 

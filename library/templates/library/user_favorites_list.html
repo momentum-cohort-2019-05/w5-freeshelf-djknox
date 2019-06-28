@@ -3,10 +3,10 @@
 {% block content %}
     <h1>My Favorites</h1>
 
-    {% if favorite_list %}
+    {% if user_favorites %}
     <ul>
 
-      {% for favorite in favorite_list %} 
+      {% for favorite in user_favorites %} 
       <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
             <a href="{{ favorite.book.get_absolute_url }}">{{ favorite.book.title }}</a> by {{ favorite.book.author }}   
       </li>
