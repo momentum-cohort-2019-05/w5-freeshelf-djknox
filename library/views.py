@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from library.forms import BookCommentForm, BookSuggestForm
+from django.contrib import messages
 
 
 def index(request):
@@ -76,8 +77,10 @@ def favorite_book(request, pk):
     if request.method == 'GET':
         if request.user in book.favorites.all():
             book.favorites.remove(request.user)
+            messages.success(request, f'{ book.title } has been removed from your favorites.')
         else:
             book.favorites.add(request.user)
+            messages.success(request, f'{ book.title } has been added to your favorites!')
 
     # redirect to a new URL:
     return HttpResponseRedirect(request.GET.get("next"))
@@ -95,6 +98,7 @@ def comment_on_book(request, pk):
         if form.is_valid():
             comment = Comment(book=book, user=request.user, text=form.cleaned_data['text'])
             comment.save()
+            messages.success(request, f'You commented on { book.title }!')
 
         # redirect to a new URL:
         return HttpResponseRedirect(reverse_lazy('book-detail', kwargs = {'pk': pk}))
@@ -128,6 +132,7 @@ def suggest_book(request):
             )
             suggested_book.user = request.user
             suggested_book.save()
+            messages.success(request, 'Your suggestion was submitted!')
 
         # redirect to a new URL:
         return HttpResponseRedirect(reverse_lazy('suggest-book'))
@@ -167,6 +172,8 @@ def accept_suggested_book(request, pk):
 
         suggested_book.delete()
 
+        messages.success(request, 'You accepted the suggested book.')
+
     # redirect to a new URL:
     return HttpResponseRedirect(request.GET.get("next"))
 
@@ -180,6 +187,7 @@ def decline_suggested_book(request, pk):
     # create a Book from the SuggestedBook object and remove SuggestedBook
     if request.method == 'GET':
         suggested_book.delete()
+        messages.success(request, 'You declined the suggested book.')
 
     # redirect to a new URL:
     return HttpResponseRedirect(request.GET.get("next"))
