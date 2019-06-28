@@ -19,10 +19,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
-# Configure Django App for Heroku.
-import django_heroku
-django_heroku.settings(locals())
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '2h+*tjf5q$pk5%hjy8zpzgrb-)b8qv4rcz7c6zn%mk2*1r=^vj'
 
@@ -130,3 +126,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/'
+
+# Configure Django App for Heroku.
+import django_heroku
+django_heroku.settings(locals())
