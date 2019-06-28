@@ -46,6 +46,18 @@ class BookDetailView(generic.DetailView):
     model = Book
 
 
+def list_authors(request):
+    authors = Author.objects.all()
+
+    return render(request, 'library/author_list.html', {'authors': authors})
+
+
+def author_detail(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+
+    return render(request, 'library/author_detail.html', {'author': author})
+
+
 class CategoryListView(generic.ListView):
     model = Category
 
