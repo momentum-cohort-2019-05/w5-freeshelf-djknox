@@ -19,7 +19,7 @@
       {% for comment in book.comment_set.all %}
         <hr>
         <p>
-            <a href="{% url 'user-profile' user.pk %}">{{ comment.user.username }}</a> ({{ comment.created_date }}) - {{ comment.text }}
+            <a href="{% url 'user-profile' comment.user.pk %}">{{ comment.user.username }}</a> ({{ comment.created_date }}) - {{ comment.text }}
         </p>
       {% empty %}
         <p>No comments yet.</p>

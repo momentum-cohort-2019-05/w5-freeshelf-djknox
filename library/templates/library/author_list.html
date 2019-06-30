@@ -3,13 +3,13 @@
 {% block content %}
   <h1>Authors</h1>
   {% if authors %}
-  <ul>
-    {% for author in authors %}
-      <li>
-        <a href="{{ author.get_absolute_url }}">{{ author.name }}</a>
-      </li>
-    {% endfor %}
-  </ul>
+    <div class="list-column-grid">
+      {% for author in authors %}
+        <div class="list-column-item">
+            <a href="{{ author.get_absolute_url }}">{{ author.name }}</a>
+        </div>
+      {% endfor %}
+    </div>
   {% else %}
     <p>There are no authors in the library.</p>
   {% endif %}       

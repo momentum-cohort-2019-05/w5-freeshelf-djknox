@@ -7,10 +7,6 @@ class Author(models.Model):
     """Model representing an author."""
     name = models.CharField(max_length=200, help_text='Enter the name of the author')
 
-    # def get_absolute_url(self):
-    #     """Returns the url to access a particular author instance."""
-    #     return reverse('author-detail', args=[str(self.id)])
-
     def __str__(self):
         """String for representing the Author object."""
         return self.name
@@ -26,6 +22,7 @@ class Category(models.Model):
 
     class Meta:
             verbose_name_plural = "categories"
+            ordering = ['name']
     
     def __str__(self):
         """String for representing the Category object."""

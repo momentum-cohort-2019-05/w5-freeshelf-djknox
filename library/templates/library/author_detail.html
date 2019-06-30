@@ -3,13 +3,17 @@
 {% block content %}
     <h1>{{ author.name }}</h1>
     {% if author.book_set.all %}
-    <h2>Books</h2>
-        {% for book in author.book_set.all %}
-        <h3><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h3>
-        <p><strong>Description:</strong> {{ book.description }}</p>
-        <p><strong>URL:</strong> <a href="{{ book.url }}" target="_blank">{{ book.url }}</a></p>
-        <p>Favorited {{ book.get_num_favorites }} time{{ book.get_num_favorites|pluralize }}</p>
-        ({{ book.comment_set.count }} comment{{ book.comment_set.count|pluralize }})
-        {% endfor %}
+        <h2>Books</h2>
+        <div class="list-column-grid">
+            {% for book in author.book_set.all %}
+                <div class="list-column-item">
+                    <h3><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h3>
+                    <p><strong>Description:</strong> {{ book.description }}</p>
+                    <p><strong>URL:</strong> <a href="{{ book.url }}" target="_blank">{{ book.url }}</a></p>
+                    <p>Favorited {{ book.get_num_favorites }} time{{ book.get_num_favorites|pluralize }}</p>
+                    ({{ book.comment_set.count }} comment{{ book.comment_set.count|pluralize }})
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
 {% endblock %}

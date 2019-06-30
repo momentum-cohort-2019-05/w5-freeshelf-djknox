@@ -4,16 +4,15 @@
     <h1>My Favorites</h1>
 
     {% if user_favorites %}
-    <ul>
-
-      {% for favorite in user_favorites %} 
-      <li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
-            <a href="{{ favorite.book.get_absolute_url }}">{{ favorite.book.title }}</a> by {{ favorite.book.author }}   
-      </li>
-      <a href="{% url 'favorite-book' favorite.book.pk %}?next={{ request.path }}">unfavorite</a>
-      {% endfor %}
-    </ul>
-
+      <div class="list-column-grid">
+        {% for favorite in user_favorites %}
+          <div class="list-column-item">
+            <a href="{{ favorite.book.get_absolute_url }}">{{ favorite.book.title }}</a> by {{ favorite.book.author }}
+            <br>
+            <a href="{% url 'favorite-book' favorite.book.pk %}?next={{ request.path }}">unfavorite</a>
+          </div>
+        {% endfor %}
+      </div>
     {% else %}
       <p>You haven't favorited any books.</p>
     {% endif %}       

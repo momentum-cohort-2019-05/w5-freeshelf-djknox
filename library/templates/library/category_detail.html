@@ -3,12 +3,18 @@
 {% block content %}
     <h1><strong>Category:</strong> {{ category.name }}</h1>
     <h2>Books:</h2>
-    {% for book in category.book_set.all %}
-        <h4><a href="{{ book.get_absolute_url }}">{{ book.title }}</a> by {{book.author}}</h4>
-        <p>
-            {{ book.description }}
-        </p>
-        ({{ book.comment_set.count }} comment{{ book.comment_set.count|pluralize }})
-    {% endfor %}
+    {% if category.book_set.all %}
+        <div class="list-column-grid">
+            {% for book in category.book_set.all %}
+                <div class="list-column-item">
+                    <h4><a href="{{ book.get_absolute_url }}">{{ book.title }}</a> by {{book.author}}</h4>
+                    <p>
+                        {{ book.description }}
+                    </p>
+                    ({{ book.comment_set.count }} comment{{ book.comment_set.count|pluralize }})
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
 

@@ -4,19 +4,26 @@
 
 {% block content %}
     <h1>freeshelf</h1>
-    <p>freeshelf currently contains:</p>
-    <ul>
-        <li>Books: {{ num_books }}</li>
-        <li>Authors: {{ num_authors }}</li>
-    </ul>
-
+    <p>
+        freeshelf is an index of programming books that can be found for free online.
+        <br>
+        <br>
+        Browse the entire collection of <a href="{% url 'books' %}">books</a> and <a href="{% url 'authors' %}">authors</a>
+        <br>
+        and <a href="{% url 'register'%}">create a username</a> to be able to save your favorite books.
+    </p>
+    <br>
+    <p>
+        freeshelf currently contains {{ num_books }} book{{ num_books|pluralize }} written by {{ num_authors }} author{{ num_authors|pluralize }}!
+    </p>
+    <br>
     <h2>Recently Added Books</h2>
-    <ul>
+    <div class="list-column-grid">
         {% for book in latest_books %}
-        <li>
+        <div class="list-column-item">
             <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> by {{book.author}}
-        </li>
+        </div>
       {% endfor %}
-    </ul>
+    </div>
 
 {% endblock %}
